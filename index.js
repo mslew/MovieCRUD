@@ -49,12 +49,22 @@ app.get("/read", function(request, response) {
 })
 
 app.post("/update", function(req, res){
-	Movie.updateOne({name: req.body.title}, {$set: {comments: req.body.comments}}, {upsert: true})
+	Movie.findOneAndUpdate(
+		{title: req.body.title},
+		{$set: {comments: req.body.comments}},
+		{upsert: true, new: true}
+	).catch(function(error,affected,resp){
+		console.log(error)
+	})
+	console.log("Updated " + req.body.title + " " + req.body.comments)
 	res.redirect("/");
 })
 
 app.post("/delete", function(req, res){
-	Movie.removeOne({title: req.body.title})
+	Movie.findOneAndDelete({title: req.body.title}).catch(function(error, affected, resp){
+		console.log(error)
+	})
+	console.log("Removed " + req.body.title)
 	res.redirect("/");
 })
 
