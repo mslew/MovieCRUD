@@ -1,4 +1,4 @@
 # MovieCRUD
-This is my implementation of MovieCRUd
+This is my implementation of MovieCRUD
 
 It is hosted here: https://movie-crud.azurewebsites.net/
