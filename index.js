@@ -22,8 +22,8 @@ const Movie = mongoose.model("movie", movieSchema);
 // Create route called from create.html
 app.post("/create", function(req, res){
 	let newNote = new Movie({
-		title: req.body.title,
-		comments: req.body.comments
+		title: req.body.title.trim(),
+		comments: req.body.comments.trim()
 	})
 	
 	newNote.save();
@@ -50,8 +50,8 @@ app.get("/read", function(request, response) {
 
 app.post("/update", function(req, res){
 	Movie.findOneAndUpdate(
-		{title: req.body.title},
-		{$set: {comments: req.body.comments}},
+		{title: req.body.title.trim()},
+		{$set: {comments: req.body.comments.trim()}},
 		{upsert: true, new: true}
 	).catch(function(error,affected,resp){
 		console.log(error)
@@ -61,7 +61,7 @@ app.post("/update", function(req, res){
 })
 
 app.post("/delete", function(req, res){
-	Movie.findOneAndDelete({title: req.body.title}).catch(function(error, affected, resp){
+	Movie.findOneAndDelete({title: req.body.title.trim()}).catch(function(error, affected, resp){
 		console.log(error)
 	})
 	console.log("Removed " + req.body.title)
